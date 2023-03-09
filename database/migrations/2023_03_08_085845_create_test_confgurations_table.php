@@ -18,6 +18,7 @@ class CreateTestConfgurationsTable extends Migration
             $table->string('birth_year')->nullable();
             $table->string("ear")->nullable();
             $table->string("sound_frequency")->nullable();
+            $table->enum('status',['inprogress','completed'])->default('inprogress');
             $table->integer("user_id")->nullable();
             
             $table->timestamps();
