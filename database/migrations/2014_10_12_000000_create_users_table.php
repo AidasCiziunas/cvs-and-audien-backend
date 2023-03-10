@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();
-            $table->string('ip_address')->nullable();  
+            $table->string('ip_address')->nullable();
+            $table->string('user_agent');
             $table->string('contact_number')->nullable();
             $table->timestamps();
         });

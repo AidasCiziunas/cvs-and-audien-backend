@@ -14,4 +14,12 @@ class TestConfguration extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    public function attemptedTest(){
+        return $this->hasMany(HearingTest::class,'test_id','id');
+    }
+
+    public function testResult(){
+      return $this->belongsTo(HearingTestResult::class,'id','test_id');
+
+    }
 }

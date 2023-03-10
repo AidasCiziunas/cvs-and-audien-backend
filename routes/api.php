@@ -4,6 +4,7 @@ use App\Http\Controllers\HearingTestController;
 use App\Http\Controllers\HearingTestResultController;
 use App\Http\Controllers\SoundController;
 use App\Http\Controllers\TestConfgurationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,9 @@ Route::post('birth-year',[TestConfgurationController::class,'storeBirthyear']);
 Route::post('Sound',[SoundController::class,'index']);
 Route::post('attempt-test',[HearingTestController::class,'store']);
 Route::post('complete-test',[HearingTestResultController::class,'store']);
-
+Route::post('user',[UserController::class,'store']);
+Route::get('user-added-data',[HearingTestResultController::class,'index']);
+Route::get('test',function(Request $request){
+    dd(request()->userAgent(),
+    request()->ip());
+});
