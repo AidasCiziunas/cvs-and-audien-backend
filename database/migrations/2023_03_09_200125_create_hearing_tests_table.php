@@ -17,7 +17,7 @@ class CreateHearingTestsTable extends Migration
             $table->id();
             $table->integer('sound_id');
             $table->integer('sound_volume');
-            $table->integer('score');
+            $table->decimal('score',3,2);
             $table->integer('test_id');
             $table->timestamps();
         });

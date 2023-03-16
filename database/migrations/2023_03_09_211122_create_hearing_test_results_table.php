@@ -16,7 +16,7 @@ class CreateHearingTestResultsTable extends Migration
         Schema::create('hearing_test_results', function (Blueprint $table) {
             $table->id();
             $table->integer('test_id');
-            $table->integer('score');
+            $table->decimal('score',3,2);
             $table->timestamps();
         });
     }

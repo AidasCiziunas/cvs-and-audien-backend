@@ -18,8 +18,9 @@ class TestConfgurationController extends Controller
 
     public function storeSoundFrequency(Request $request)
     {
+        $id= $request->id;
         $userId = $this->getUser($this->ip)->id;
-        $soudFrequency = TestConfguration::where('user_id', $userId)->first();
+        $soudFrequency = TestConfguration::where('id', $id)->first();
         $soudFrequency->sound_frequency = $request->frequency;
         $soudFrequency->save();
         return response()->json(['user' => $this->getUser($this->ip), 'test-configuration' => $this->getTestConfiguration($userId)]);
@@ -41,9 +42,10 @@ class TestConfgurationController extends Controller
 
     public function store(EarRequest $request)
     {
+        $id= $request->id;
 
         $userId = $this->getUser($this->ip)->id;
-        $ear = TestConfguration::where('user_id', $userId)->latest()->first();
+        $ear = TestConfguration::where('id', $id)->first();
         $ear->ear = $request->ear;
         $ear->user_id = $userId;
         $ear->save();
@@ -66,6 +68,8 @@ class TestConfgurationController extends Controller
 
     public function storeBirthyear(Request $request)
     {
+        $id =  $request->id;
+       
         $userId = null;
         if (User::where('ip_address', $this->ip)->where('user_agent', $this->userAgent)->count() == 0) {
 
@@ -78,15 +82,15 @@ class TestConfgurationController extends Controller
             $user = User::where('ip_address', $this->ip)->where('user_agent', $this->userAgent)->first();
             $userId =  $user->id;
         }
-        if (TestConfguration::where('user_id', $user->id)->where('status', 'inporgress')->count() == 0) {
+        if ($id==null) {
             $ear = new TestConfguration();
             $ear->birth_year = $request->birth_year;
             $ear->user_id = $userId;
             $ear->status = 'inprogress';
             $ear->save();
         } else {
-            $ear = TestConfguration::where('user_id', $userId)
-                ->latest()
+            $ear = TestConfguration::where('id', $id)
+               
                 ->first();
             $ear->birth_year = $request->birth_year;
             $ear->user_id = $userId;

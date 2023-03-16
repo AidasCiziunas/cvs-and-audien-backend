@@ -16,24 +16,25 @@ class HearingTestResultController extends Controller
    {
      $this->user = User::where('ip_address', $request->ip())->where('user_agent',$request->userAgent())->first();
    }
-    public function index(){
-    
-      $testHistory = TestConfguration::with(['attemptedTest','testResult'])->where('user_id',$this->user->id)->latest()->first();
-      $testHistory->user= $this->user;
+    public function index(Request $request){
+      $id = $request->id;
+      $testHistory = TestConfguration::with(['attemptedTest','testResult'])->where('id',$id)->first();
+      $testHistory->user= User::where('id',$testHistory->user_id)->first();
       return response()->json(['message'=>'User added data','data'=>$testHistory]);
     }
 
     public function store(Request $request)
     {
-        $user = User::where('ip_address', $request->ip())->where('user_agent',$request->user_agent)->latest()->first();
-        $test = TestConfguration::where('status', 'inprogress')
-            ->where('user_id', $this->user->id)->latest()->first();
+        $id = $request->id;
+        $test = TestConfguration::where('id',$id)->first();
+        $user = User::where('id', $test->user_id)->first();
+        
          $test->status = 'completed';
         $test->save();
-        $hearingTest = HearingTest::where('test_id', $test->id)->sum('score');
-        $score = ($hearingTest / 40) * 10;
+        $hearingTest = HearingTest::where('test_id', $id)->sum('score');
+        $score = ($hearingTest / 35) * 10;
         $testResult = new HearingTestResult();
-        $testResult->test_id = $test->id;
+        $testResult->test_id = $id;
         $testResult->score = $score;
         $testResult->save();
         return response()->json(['message' => 'Hearing test completed', 'data' => $testResult]);
