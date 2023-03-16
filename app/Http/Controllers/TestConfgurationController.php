@@ -89,9 +89,19 @@ class TestConfgurationController extends Controller
             $ear->status = 'inprogress';
             $ear->save();
         } else {
-            $ear = TestConfguration::where('id', $id)
+            // dd('yes');
+            // $ear =null;
+            if(TestConfguration::find($id)){
+                $ear = TestConfguration::where('id', $id)
                
                 ->first();
+            }else{
+                $ear = new TestConfguration();
+                $ear->id = $id;
+            }
+            // $ear = TestConfguration::where('id', $id)
+               
+            //     ->first();
             $ear->birth_year = $request->birth_year;
             $ear->user_id = $userId;
             $ear->status = 'inprogress';
