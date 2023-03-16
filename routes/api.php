@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('ear',[TestConfgurationController::class,'store']);
+Route::post('ear/{id?}',[TestConfgurationController::class,'store']);
 Route::post('sound-frequency',[TestConfgurationController::class,'storeSoundFrequency']);
 Route::post('birth-year',[TestConfgurationController::class,'storeBirthyear']);
 Route::post('Sound',[SoundController::class,'index']);
